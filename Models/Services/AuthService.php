@@ -1,9 +1,9 @@
 <?php
 
 class AuthService{
-    function login(string $email, string $password){
+    function login(string $first_name, string $email, string $password){
         $userRepo = new UsersRepository();
-        return $userRepo->login($email, $password);
+        return $userRepo->login($first_name, $email, $password);
     }
 
     function registration(string $first_name, string $last_name, string $email, string $password, string $role){

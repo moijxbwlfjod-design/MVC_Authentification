@@ -1,3 +1,11 @@
+<?php 
+session_start();
+if(!isset($_SESSION["name"])){
+    header("location: ../Public/register");
+    exit;
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,9 +16,7 @@
 <body>
     <div class="card">
         <?php 
-            if($_SERVER["REQUEST_METHOD"] == "POST"){
-                echo "Welcome $_POST[name]!";
-            }
+            echo "Welcome " . $_SESSION["name"];
         ?>
     </div>
 </body>

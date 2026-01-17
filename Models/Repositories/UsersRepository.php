@@ -10,16 +10,12 @@ class UsersRepository{ // TO Be Deleted
         try{
             $conn = Connection::ConnectToDB();
             $sql = "insert into users (first_name, last_name, email, password, role) values (?, ?, ?, ?, ?)";
-            $conn->prepare($sql);
-            $ref = new ReflectionFunction(__FUNCTION__);
-            $args = get_func_args();
-            foreach($ref->getParameters() as $index => $param){
-                $conn->bindParam($index + 1, $args[$index]);
-            }
-            $new_user = new Users($conn->lastInsertId, $first_name, $last_name, $email, $password, $role);
+            $stm = $conn->prepare($sql);
+            $stm->execute([$first_name, $last_name, $email, $password, $role]);
+            $new_user = new Users($conn->lastInsertId(), $first_name, $last_name, $email, $password, $role);
             $this->users[] = $new_user;
             return true;
-        }catch(Exception $e){
+        }catch(PDOException $e){
             return false;
         }
     }
@@ -39,11 +35,11 @@ class UsersRepository{ // TO Be Deleted
         return true;
     }
 
-    function login(string $email, string $password){
+    function login(string $first_name, string $email, string $password){
         $conn = Connection::ConnectToDB();
-        $sql = "select password from users where email = ?";
+        $sql = "select password from users where first_name = ? and email = ?";
         $query = $conn->prepare($sql);
-        $query->execute([$email]);
+        $query->execute([$first_name, $email]);
         if($query->rowCount() > 0){
             $pass = $query->fetch(PDO::FETCH_ASSOC)["password"];
             if(password_verify($password, $pass)){

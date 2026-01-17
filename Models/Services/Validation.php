@@ -19,8 +19,8 @@ class Validation{
         return false;
     }
 
-    static function RegisterValidation(string $first_name, string $last_name, string $password, string $email, string $role){
-        if($this->NameValidation($first_name, $last_name) && !empty($password) && !empty($role) && $role == "Recruteur" && $role == "Candidat" && $this->EmailValidation($email)){
+    static function RegisterValidation(string $first_name, string $last_name, string $email, string $password, string $role){
+        if(self::NameValidation($first_name, $last_name) && !empty($password) && !empty($role) && ($role == "Recruteur" || $role == "Candidat") && self::EmailValidation($email)){
             return true;
         }
         return false;
