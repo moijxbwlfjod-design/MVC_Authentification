@@ -38,4 +38,19 @@ class UsersRepository{ // TO Be Deleted
         }
         return true;
     }
+
+    function login(string $email, string $password){
+        $conn = Connection::ConnectToDB();
+        $sql = "select password from users where email = ?";
+        $query = $conn->prepare($sql);
+        $query->execute([$email]);
+        if($query->rowCount() > 0){
+            $pass = $query->fetch(PDO::FETCH_ASSOC)["password"];
+            if(password_verify($password, $pass)){
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
 }
