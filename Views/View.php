@@ -19,5 +19,9 @@ if(!isset($_SESSION["name"])){
             echo "Welcome " . $_SESSION["name"];
         ?>
     </div>
+    <form action="../Controllers/AuthController.php" method="POST">
+        <button name="logout-btn" type="submit">Log Out</button>
+    </form>
+
 </body>
 </html>

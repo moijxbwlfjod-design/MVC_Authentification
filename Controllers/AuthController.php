@@ -31,17 +31,19 @@ class AuthController{
                     header("location: ../Views/View.php");
                     exit;
                 }
-            } else{
-                die("<script>alert('Please Give Valide Data In Form')</script>");
             }
         }
     }
 
-    //function logout(){
-
-    //}
+    function logout(){
+        if(isset($_POST["logout-btn"])){
+            $AuthSer = new AuthService();
+            if($AuthSer->logout()) header("location: ../Public/login.php");
+        }
+    }
 }
 
 $AuthController = new AuthController();
 $AuthController->login();
 $AuthController->registration();
+$AuthController->logout();

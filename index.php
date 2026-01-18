@@ -29,6 +29,10 @@ route("/MVC_Authentification/", function(){
     header("location:Public/register.php");
 });
 
+route("/MVC_Authentification/Public", function(){
+    header("location:Public/register.php");
+});
+
 route("/404", function(){
     echo "<script>alert('Page Not Found')</script>";
 });
